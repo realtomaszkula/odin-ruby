@@ -1,0 +1,21 @@
+
+def stock_picker(arr)
+results = {}
+  stocks = arr 
+	x = 0
+	while (stocks.size > 1)
+	  todays_index = x
+	  todays_stock = arr[0]
+	
+	  stocks.shift
+	  max = stocks.max
+	  max_index = stocks.index(stocks.max)
+	
+	  todays_profit = max - todays_stock 
+	  results["buy at day: #{todays_index}, sell at day: #{max_index}"] = "$#{todays_profit} profit"
+	  x += 1
+	end
+results.max_by{ |k,v| v}
+end
+
+stock_picker([17,3,6,9,15,8,6,1,10])
