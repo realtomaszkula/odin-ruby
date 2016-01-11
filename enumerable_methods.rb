@@ -3,9 +3,28 @@ module Enumerable
 		i = 0
 		until (i == self.size)
 			yield(self[i])
+		end
+		self
+	end
+
+
+	def my_each_with_index
+
+	end
+
+
+	def my_select
+		results = []
+		i = 0
+		until (i == self.size)
+			results << self[i] if yield(self[i])
 		i += 1
 		end
-		return self
+		results
 	end
+
+
+	def
+
 end
 
