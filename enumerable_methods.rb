@@ -127,6 +127,17 @@ module Enumerable
 		return sum
 	end
 
+	def my_map_proc(proc)
+	results = []
+		i = 0
+		until i == self.size
+			results << proc.call(self[i])
+		i += 1
+		end
+	results
+	end
+
+
 # load "./enumerable_methods.rb"
 end
 
