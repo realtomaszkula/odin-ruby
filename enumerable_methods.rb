@@ -67,24 +67,6 @@ module Enumerable
 	result
 	end
 
-	def my_map
-	results = []
-		i = 0
-		until i == self.size
-			results << yield(self[i])
-		i += 1
-		end
-	results
-	end
-
-	def my_map!
-		i = 0
-		until i == self.size
-			self[i] = yield(self[i])
-		i += 1
-		end
-	self
-	end
 
 	def my_inject ( p = (no_arg_passed = true, nil) )																	
 		 sum = 0
@@ -126,6 +108,26 @@ module Enumerable
 		end
 		return sum
 	end
+
+	def my_map
+	results = []
+		i = 0
+		until i == self.size
+			results << yield(self[i])
+		i += 1
+		end
+	results
+	end
+
+	def my_map!
+		i = 0
+		until i == self.size
+			self[i] = yield(self[i])
+		i += 1
+		end
+	self
+	end
+
 
 	def my_map_proc(proc)
 	results = []
