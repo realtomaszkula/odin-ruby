@@ -29,6 +29,14 @@ module Enumerable
 		results
 	end
 
+	def my_all?
+		i = 0
+		until (i == self.size)
+			return false unless yield(self[i])
+		i += 1
+		end
+		true
+	end
 
 end
 
