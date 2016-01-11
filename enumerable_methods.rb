@@ -108,8 +108,23 @@ module Enumerable
 	end
 
 	def my_inject_symbol(sym, para = (no_arg_passed = true, nil))
-		p sym
-		p para
+		if no_arg_passed
+			i = 1
+			sum = self[i-1]
+			until i == self.size
+				sum = sum.send sym, self[i]
+				i += 1
+			end
+		else
+			i = 0
+			sum = para
+			until i == self.size
+				sum = sum.send sym, self[i]
+				i += 1
+			end
+			
+		end
+		return sum
 	end
 
 # load "./enumerable_methods.rb"
