@@ -3,13 +3,19 @@ module Enumerable
 		i = 0
 		until (i == self.size)
 			yield(self[i])
+			i += 1
 		end
 		self
 	end
 
 
 	def my_each_with_index
-
+		i = 0
+		until (i == self.size)
+			yield(self[i], i)
+			i += 1
+		end
+		self
 	end
 
 
@@ -23,8 +29,6 @@ module Enumerable
 		results
 	end
 
-
-	def
 
 end
 
