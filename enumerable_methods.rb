@@ -86,7 +86,28 @@ module Enumerable
 	self
 	end
 
+	def my_inject(p = (no_arg_passed = true, nil))
+		 sum = 0
+		 if block_given? && no_arg_passed
+			i = 0
+			sum = self[i]
+			until i == self.size
+			 	sum = yield(sum, self[i])
+			 	i += 1
+			end
+			return sum
+		elsif block_given?
+			i = 0
+			sum = p
+			until i == self.size
+			 	sum = yield(sum, self[i])
+			 	i += 1
+			end
+			return sum
+		end
+	end
 
+# load "./enumerable_methods.rb"
 
 end
 
