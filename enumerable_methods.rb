@@ -47,5 +47,24 @@ module Enumerable
 		true
 	end
 
+	def my_count(p1 = (no_arg_passed = true; nil), &block)
+	result = 0
+	if no_arg_passed && block_given? == false then return self.size; end
+	
+	if block_given? 
+		i = 0
+		until (i == self.size)
+			if yield(self[i]) then result += 1;	end
+		i += 1
+		end
+	else
+		i = 0
+		until (i == self.size)
+			if self[i] == p1 then result += 1; end
+		i += 1
+		end
+	end
+	result
+	end
 end
 
