@@ -86,11 +86,11 @@ module Enumerable
 	self
 	end
 
-	def my_inject(p = (no_arg_passed = true, nil))
+	def my_inject ( p = (no_arg_passed = true, nil) )																	
 		 sum = 0
 		 if block_given? && no_arg_passed
-			i = 0
-			sum = self[i]
+			i = 1
+			sum = self[i-1]
 			until i == self.size
 			 	sum = yield(sum, self[i])
 			 	i += 1
@@ -107,7 +107,11 @@ module Enumerable
 		end
 	end
 
-# load "./enumerable_methods.rb"
+	def my_inject_symbol(sym, para = (no_arg_passed = true, nil))
+		p sym
+		p para
+	end
 
+# load "./enumerable_methods.rb"
 end
 
