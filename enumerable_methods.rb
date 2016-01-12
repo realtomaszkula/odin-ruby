@@ -140,6 +140,25 @@ module Enumerable
 	end
 
 
+	def my_map_block_proc(proc)
+	results = []
+	if block_given?
+		i = 0
+		until i == self.size
+			 results << yield(proc.call(self[i]))
+			i += 1
+		end
+	else 
+		i = 0
+		until i == self.size
+			results << proc.call(self[i])
+			i += 1
+		end
+	end
+	results
+	end
+
+
 # load "./enumerable_methods.rb"
 end
 
