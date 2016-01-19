@@ -105,7 +105,7 @@ class Hangman
 	end
 
 	def check_word?(word)
-		@win == true if @secret_word == word 
+		@win = true if @secret_word == word 
 		@secret_word != word
 	end
 
