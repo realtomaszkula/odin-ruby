@@ -1,19 +1,22 @@
 class Hangman
 	@@turn = 0
+	@@mistake = 0
 	def initialize(name)
 		@name = name
 		@secret_word = get_secret
 		@letters = @secret_word.split("")
 		@bool_pairs = get_pairs
+		@hangman = prototype
 		play
 	end
 
 	def play
 		loop do
+			draw_clues
 			input = get_input
 			check_letter(input) if input.size > 1
 			break if game_over? || victory?(input)
-			draw_clues
+
 			draw_hangman
 		end
 	end
@@ -23,12 +26,30 @@ class Hangman
 		puts "\n"
 	end
 
-	def draw_hangman		
+
+	def draw_hangman
+		puts @hangman
 	end
+
+	def prototype
+		line = []
+		line[0]="___________"
+		line[1]="|         |"
+		line[2]="|         0 "
+		line[3]="|        /|\\  "
+		line[4]="|        / \\ "
+
+		len = @secret_word.length - 1
+		for i in 5..len
+			line[i] = "|            "
+		end
+		line.join("\n")
+	end
+
 
 	def get_secret
 		file = File.open("dictionary.txt",'r') do |fname|
-			file = fname.read.split(/\n/)
+			fname.read.split(/\n/).select {|word| word.size > 5}
 		end
 		file.sample
 	end	
@@ -63,6 +84,7 @@ end
 puts "Enter name to play HangMaaaan"
 name = gets.chomp
 Hangman.new(name)
+
 
 
 
