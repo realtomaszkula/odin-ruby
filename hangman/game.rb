@@ -14,7 +14,8 @@ class Hangman
 		loop do
 			draw_clues
 			input = get_input
-			check_letter(input) if input.size > 1
+			input.size > 1 ? victory?(input) : check_letter(input)
+			p @bool_pairs
 			break if game_over? || victory?(input)
 
 			draw_hangman
@@ -57,6 +58,7 @@ class Hangman
 	def get_pairs
 		@bool_pairs = []
 		@letters.each { |letter| @bool_pairs << [letter,false] }
+		@bool_pairs
 	end
 	
 	def get_input
@@ -67,8 +69,15 @@ class Hangman
 
 	
 	def check_letter(letter)
-		@bool_pairs.each { |bool_pair| bool_pair[1] = true if bool_pair[0] == letter }
+		@bool_pairs.map! do |bool_pair| 
+			if bool_pair[0] == letter
+				bool_pair[0], bool_pair[1] = true, bool_pair[0]
+			else 
+				bool_pair[0], bool_pair[1] = false, bool_pair[0]
+			end
+		end
 	end
+
 
 	def game_over?
 		@@turn += 1
