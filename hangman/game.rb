@@ -8,12 +8,13 @@ class Hangman
 		@hangman = prototype
 		@mistake = 0
 		@turn = 0
+		@win = false
 	end
 
 	def play
 		loop do
+			draw_clues
 			input = get_input
-
 			temp_bool = @bool_pairs.dup
 			if input.size > 1
 				missd = check_word?(input)
@@ -23,12 +24,19 @@ class Hangman
 
 			unless missd
 				@mistake += 1
+				@punish = true
 			end
 
-			draw_clues
+			if @punish
+				draw_hangman
+				@punish = false
+			end
 
-			break if game_over?
+			break if game_over? || @win
 		end
+
+		@win ? won : lost
+
 	end
 
 	private
@@ -36,32 +44,34 @@ class Hangman
 	def draw_clues
 		@bool_pairs.each do |pair|
 			if pair[1] == true
-				print pair[1]
+				print " #{pair[0]}"
 			else
-				print "_"
+				print " _"
 			end
-			" "
 		end
+		print "\n"
 	end
 
 
 	def draw_hangman
-		puts @hangman
+		puts "\n\n"
+		puts @hangman[0..@mistake].join("\n")
+		puts "\n\n"
 	end
 
 	def prototype
 		line = []
-		line[0]="___________"
-		line[1]="|         |"
-		line[2]="|         0 "
-		line[3]="|        /|\\  "
-		line[4]="|        / \\ "
+		line[0]="\t___________"
+		line[1]="\t|         |"
+		line[2]="\t|         0 "
+		line[3]="\t|        /|\\  "
+		line[4]="\t|        / \\ "
 
 		len = @secret_word.length - 1
 		for i in 5..len
-			line[i] = "|            "
+			line[i] = "\t|            "
 		end
-		line.join("\n")
+		line
 	end
 
 
@@ -95,11 +105,27 @@ class Hangman
 	end
 
 	def check_word?(word)
+		@win == true if @secret_word == word 
 		@secret_word != word
 	end
 
 	def game_over?
 		@mistake == @secret_word.size
+	end
+
+	def lost
+		puts %{
+\t******************************
+\t\tHANGED
+\t******************************
+\t\tword: #{@secret_word}
+\t******************************
+		}
+	end
+
+	def won
+		puts %{CONGRATULATIONS! YOU WON!}
+		puts %{WINNING WORD: #{@secret_word}}
 	end
 
 
