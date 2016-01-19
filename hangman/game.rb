@@ -1,7 +1,7 @@
 class Hangman
 
 	def initialize(name)
-		@name = name
+		@name = name.upcase
 		@secret_word = get_secret
 		@letters = @secret_word.split("")
 		@bool_pairs = get_pairs
@@ -87,7 +87,7 @@ class Hangman
 	end
 	
 	def get_input
-		puts "type a letter or try to guess a word"
+		puts "#{@name}, type a letter or try to guess a word"
 		input = gets.chomp
 	end
 	
