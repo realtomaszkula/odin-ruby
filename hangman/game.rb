@@ -1,6 +1,4 @@
 class Hangman
-	@@turn = 0
-	@@mistake = 0
 
 	def initialize(name)
 		@name = name
@@ -8,32 +6,42 @@ class Hangman
 		@letters = @secret_word.split("")
 		@bool_pairs = get_pairs
 		@hangman = prototype
+		@mistake = 0
+		@turn = 0
 	end
 
 	def play
 		loop do
-			p @bool_pairs
 			input = get_input
+
+			temp_bool = @bool_pairs.dup
 			if input.size > 1
-				victory?(input)
+				missd = check_word?(input)
 			else
-				 check_letter(input)
+				missd = check_letter?(input)
 			end
 
-			p @bool_pairs
-			break if game_over? || victory?(input)
+			unless missd
+				@mistake += 1
+			end
+
+			draw_clues
+
+			break if game_over?
 		end
 	end
 
 	private
+
 	def draw_clues
-		# @bool_pairs.each do |bool_pair| 
-		# 	if bool_pair[1]
-		# 		print bool_pair[0]
-		# 	else
-		# 		print " "
-		# 	end
-		# end
+		@bool_pairs.each do |pair|
+			if pair[1] == true
+				print pair[1]
+			else
+				print "_"
+			end
+			" "
+		end
 	end
 
 
@@ -73,25 +81,28 @@ class Hangman
 		input = gets.chomp
 	end
 	
-	def check_letter(letter)
+	def check_letter?(letter)
+		changed = false
 			@bool_pairs.map! do |bool_pair| 
 			if bool_pair[0] == letter || bool_pair[1] == true
+					changed = true if bool_pair[1] == false 
 				bool_pair[0] = bool_pair[0], bool_pair[1] = true
 			else 
 				bool_pair[0] = bool_pair[0], bool_pair[1] = false
 			end
 		end
+		changed
 	end
 
+	def check_word?(word)
+		@secret_word != word
+	end
 
 	def game_over?
-		@@turn += 1
-		@@turn > 10
+		@mistake == @secret_word.size
 	end
 
-	def victory?(word)
-		@secret_word == word
-	end
+
 
 end
 
