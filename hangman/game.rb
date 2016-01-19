@@ -1,30 +1,39 @@
 class Hangman
 	@@turn = 0
 	@@mistake = 0
+
 	def initialize(name)
 		@name = name
 		@secret_word = get_secret
 		@letters = @secret_word.split("")
 		@bool_pairs = get_pairs
 		@hangman = prototype
-		play
 	end
 
 	def play
 		loop do
-			draw_clues
+			p @bool_pairs
 			input = get_input
-			input.size > 1 ? victory?(input) : check_letter(input)
+			if input.size > 1
+				victory?(input)
+			else
+				 check_letter(input)
+			end
+
 			p @bool_pairs
 			break if game_over? || victory?(input)
-
-			draw_hangman
 		end
 	end
 
+	private
 	def draw_clues
-		@letters.size.times {print "_ "} 
-		puts "\n"
+		# @bool_pairs.each do |bool_pair| 
+		# 	if bool_pair[1]
+		# 		print bool_pair[0]
+		# 	else
+		# 		print " "
+		# 	end
+		# end
 	end
 
 
@@ -56,9 +65,7 @@ class Hangman
 	end	
 
 	def get_pairs
-		@bool_pairs = []
-		@letters.each { |letter| @bool_pairs << [letter,false] }
-		@bool_pairs
+		@bool_pairs = @letters.map { |letter| [letter,false] }
 	end
 	
 	def get_input
@@ -66,14 +73,12 @@ class Hangman
 		input = gets.chomp
 	end
 	
-
-	
 	def check_letter(letter)
-		@bool_pairs.map! do |bool_pair| 
-			if bool_pair[0] == letter
-				bool_pair[0], bool_pair[1] = true, bool_pair[0]
+			@bool_pairs.map! do |bool_pair| 
+			if bool_pair[0] == letter || bool_pair[1] == true
+				bool_pair[0] = bool_pair[0], bool_pair[1] = true
 			else 
-				bool_pair[0], bool_pair[1] = false, bool_pair[0]
+				bool_pair[0] = bool_pair[0], bool_pair[1] = false
 			end
 		end
 	end
@@ -90,9 +95,10 @@ class Hangman
 
 end
 
-puts "Enter name to play HangMaaaan"
+puts "Enter name to play Hangman"
 name = gets.chomp
-Hangman.new(name)
+game = Hangman.new(name)
+game.play
 
 
 
