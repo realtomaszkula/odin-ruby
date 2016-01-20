@@ -9,6 +9,7 @@ class Hangman
 		@mistake = 0
 		@turn = 0
 		@win = false
+		@missd_letters = []
 	end
 
 	def play
@@ -17,12 +18,12 @@ class Hangman
 			input = get_input
 			temp_bool = @bool_pairs.dup
 			if input.size > 1
-				missd = check_word?(input)
+				hit = check_word?(input)
 			else
-				missd = check_letter?(input)
+				hit = check_letter?(input)
 			end
 
-			unless missd
+			unless hit
 				@mistake += 1
 				@punish = true
 			end
@@ -41,10 +42,11 @@ class Hangman
 	private
 
 	def draw_clues
+		print "\n\n"
 		@bool_pairs.each do |pair|
 			print pair[1] ? " #{pair[0]}" : " _"
 		end
-		print "\n"
+		print "\n\n"
 	end
 
 
@@ -62,10 +64,9 @@ class Hangman
 		line[3]="\t|        /|\\  "
 		line[4]="\t|        / \\ "
 
-		len = @secret_word.length - 1
-		for i in 5..len
-			line[i] = "\t|            "
-		end
+		finish_the_hangman = @letters.size - 5
+		(finish_the_hangman).times {line << "\t|            "} 
+
 		line
 	end
 
@@ -83,7 +84,18 @@ class Hangman
 	
 	def get_input
 		puts "#{@name}, type a letter or try to guess a word"
+		puts "Turns left: #{turns_left}, missed letters/words: #{@missd_letters.inspect}"
+
 		input = gets.chomp
+		until input.size > 0
+			puts "Incorrect input, try again"
+			input = gets.chomp
+		end	
+		input
+	end
+
+	def turns_left
+		@turns_left = @letters.size - @mistake
 	end
 	
 	def check_letter?(letter)
@@ -96,6 +108,7 @@ class Hangman
 				bool_pair[0] = bool_pair[0], bool_pair[1] = false
 			end
 		end
+		@missd_letters << letter unless changed
 		changed
 	end
 
