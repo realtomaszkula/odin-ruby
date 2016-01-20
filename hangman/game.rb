@@ -14,6 +14,7 @@ class Hangman
 
 	def play
 		loop do
+			puts @secret_word
 			draw_clues
 			input = get_input
 			temp_bool = @bool_pairs.dup
@@ -75,7 +76,7 @@ class Hangman
 		file = File.open("dictionary.txt",'r') do |fname|
 			fname.read.split(/\n/).select {|word| word.size > 5}
 		end
-		file.sample
+		file.sample.downcase
 	end	
 
 	def get_pairs
@@ -86,10 +87,10 @@ class Hangman
 		puts "#{@name}, type a letter or try to guess a word"
 		puts "Turns left: #{turns_left}, missed letters/words: #{@missd_letters.inspect}"
 
-		input = gets.chomp
+		input = gets.downcase.chomp
 		until input.size > 0
 			puts "Incorrect input, try again"
-			input = gets.chomp
+			input = gets.downcase.chomp
 		end	
 		input
 	end
