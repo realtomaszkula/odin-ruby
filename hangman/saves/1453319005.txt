@@ -1,0 +1,47 @@
+--- !ruby/object:Hangman
+secret_word: wormwood
+letters:
+- w
+- o
+- r
+- m
+- w
+- o
+- o
+- d
+bool_pairs:
+- - w
+  - false
+- - o
+  - false
+- - r
+  - true
+- - m
+  - false
+- - w
+  - false
+- - o
+  - false
+- - o
+  - false
+- - d
+  - true
+hangman:
+- "\t\t\t___________"
+- "\t\t\t|         |"
+- "\t\t\t|         0 "
+- "\t\t\t|        /|\\  "
+- "\t\t\t|        / \\ "
+- "\t\t\t|            "
+- "\t\t\t|            "
+- "\t\t\t|            "
+mistake: 5
+turn: 0
+win: false
+missd_letters:
+- a
+- b
+- s
+- g
+- e
+turns_left: 3

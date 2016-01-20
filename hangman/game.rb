@@ -1,7 +1,8 @@
+require 'yaml'
+
 class Hangman
 
-	def initialize(name)
-		@name = name.upcase
+	def initialize
 		@secret_word = get_secret
 		@letters = @secret_word.split("")
 		@bool_pairs = get_pairs
@@ -12,24 +13,20 @@ class Hangman
 		@missd_letters = []
 	end
 
+	# def self.deserialize(yaml_string)
+		
+	# end
+
 	def play
 		loop do
-			puts @secret_word
-			draw_clues
+			puts "\e[H\e[2J"
+			draw_interface
 			input = get_input
 			temp_bool = @bool_pairs.dup
 			hit = input.size > 1 ?  check_word?(input) : check_letter?(input)
 
-			unless hit
-				@mistake += 1
-				@punish = true
-			end
-
-			if @punish
-				draw_hangman
-				@punish = false
-			end
-
+			@mistake += 1 unless hit
+				
 			break if game_over? || @win
 		end
 
@@ -38,14 +35,24 @@ class Hangman
 
 	private
 
-	def draw_clues
-		print "\n\n"
-		@bool_pairs.each do |pair|
-			print pair[1] ? " #{pair[0]}" : " _"
+
+
+	def save_the_game
+		yaml_string = serialize
+		
+		name = Time.now.to_i.to_s << ".txt"
+		
+		File.open("./saves/#{name}", "w") do |f|
+			f.puts yaml_string
 		end
-		print "\n\n"
+
+		print "\n\t\t\t*  Game saved!  *\n\t\t\t"
 	end
 
+
+	def serialize
+		YAML::dump(self)
+	end
 
 	def draw_hangman
 		puts "\n\n"
@@ -55,16 +62,25 @@ class Hangman
 
 	def prototype
 		line = []
-		line[0]="\t___________"
-		line[1]="\t|         |"
-		line[2]="\t|         0 "
-		line[3]="\t|        /|\\  "
-		line[4]="\t|        / \\ "
+		line[0]="\t\t\t___________"
+		line[1]="\t\t\t|         |"
+		line[2]="\t\t\t|         0 "
+		line[3]="\t\t\t|        /|\\  "
+		line[4]="\t\t\t|        / \\ "
 
 		finish_the_hangman = @letters.size - 5
-		(finish_the_hangman).times {line << "\t|            "} 
+		(finish_the_hangman).times {line << "\t\t\t|            "} 
 
 		line
+	end
+
+
+	def draw_clues
+		print "\n\n\t\t\t"
+		@bool_pairs.each do |pair|
+			print pair[1] ? " #{pair[0]}" : " _"
+		end
+		print "\n\n"
 	end
 
 
@@ -80,15 +96,33 @@ class Hangman
 	end
 	
 	def get_input
-		puts "#{@name}, type a letter or try to guess a word"
-		puts "Turns left: #{turns_left}, missed letters/words: #{@missd_letters.inspect}"
-
 		input = gets.downcase.chomp
-		until input.size > 0
-			puts "Incorrect input, try again"
+		until input.size > 0 || input == "save" || input == "exit"
+			puts "\t\t\t\tIncorrect input, try again"
+			print "\t\t\t"
 			input = gets.downcase.chomp
 		end	
+
+		case input 
+		when "save"
+			save_the_game
+			get_input
+		when "exit"
+			puts "\e[H\e[2J"
+			Kernel.exit
+		end
+
 		input
+	end
+
+	def draw_interface
+		draw_hangman if @mistake > 0 
+		puts "\t\tSAVE to save the game \t EXIT to ragequit".center(50)
+		puts "\t\tTurns left: #{turns_left}"
+		puts "\t\tmissed letters/words:"
+		puts "\t\t#{@missd_letters.inspect}"
+		draw_clues
+		print "\t\t\t\t"
 	end
 
 	def turns_left
@@ -122,27 +156,48 @@ class Hangman
 
 	def lost
 		puts %{
-\t******************************
-\t\tHANGED
-\t******************************
-\t\tword: #{@secret_word}
-\t******************************
+\t\t******************************
+\t\t\tHANGED
+\t\t******************************
+\t\t\tword: #{@secret_word}
+\t\t******************************
 		}
 	end
 
 	def won
-		puts %{CONGRATULATIONS! YOU WON!}
-		puts %{WINNING WORD: #{@secret_word}}
+		puts %{\t\tCONGRATULATIONS! YOU WON!}
+		puts %{\t\tWINNING WORD: #{@secret_word}}
 	end
-
-
-
 end
 
-puts "Enter name to play Hangman"
-name = gets.chomp
-game = Hangman.new(name)
+######################
+
+def load_the_game
+	last_file = Dir.glob("./*/*").sort_by { |fname| File.ctime(fname) }.last
+	yaml_string = File.open("#{last_file}","r") {|fname| fname.read}
+	x = YAML::load(yaml_string)
+end
+
+
+puts "Do you want to load previously saved game? Y/N"
+input = gets.chomp
+until input == "y" || input == "n"
+	"Incorrect, try again"
+	input = gets.chomp.downcase
+end
+
+case input
+when  "n"
+	game = Hangman.new
+when "y"
+	game = load_the_game
+end
+
 game.play
+
+
+
+
 
 
 

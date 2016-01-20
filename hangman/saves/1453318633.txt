@@ -1,0 +1,58 @@
+--- !ruby/object:Hangman
+secret_word: galvanometer
+letters:
+- g
+- a
+- l
+- v
+- a
+- n
+- o
+- m
+- e
+- t
+- e
+- r
+bool_pairs:
+- - g
+  - false
+- - a
+  - false
+- - l
+  - false
+- - v
+  - false
+- - a
+  - false
+- - n
+  - false
+- - o
+  - false
+- - m
+  - false
+- - e
+  - false
+- - t
+  - false
+- - e
+  - false
+- - r
+  - false
+hangman:
+- "\t\t\t___________"
+- "\t\t\t|         |"
+- "\t\t\t|         0 "
+- "\t\t\t|        /|\\  "
+- "\t\t\t|        / \\ "
+- "\t\t\t|            "
+- "\t\t\t|            "
+- "\t\t\t|            "
+- "\t\t\t|            "
+- "\t\t\t|            "
+- "\t\t\t|            "
+- "\t\t\t|            "
+mistake: 0
+turn: 0
+win: false
+missd_letters: []
+turns_left: 12

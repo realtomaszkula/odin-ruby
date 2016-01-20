@@ -1,0 +1,45 @@
+--- !ruby/object:Hangman
+name: test
+secret_word: basicity
+letters:
+- b
+- a
+- s
+- i
+- c
+- i
+- t
+- y
+bool_pairs:
+- - b
+  - false
+- - a
+  - true
+- - s
+  - false
+- - i
+  - false
+- - c
+  - true
+- - i
+  - false
+- - t
+  - false
+- - y
+  - false
+hangman:
+- "\t___________"
+- "\t|         |"
+- "\t|         0 "
+- "\t|        /|\\  "
+- "\t|        / \\ "
+- "\t|            "
+- "\t|            "
+- "\t|            "
+mistake: 2
+turn: 0
+win: false
+missd_letters:
+- g
+turns_left: 6
+punish: false

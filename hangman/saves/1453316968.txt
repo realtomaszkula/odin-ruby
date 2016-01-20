@@ -1,0 +1,56 @@
+--- !ruby/object:Hangman
+secret_word: reappraisal
+letters:
+- r
+- e
+- a
+- p
+- p
+- r
+- a
+- i
+- s
+- a
+- l
+bool_pairs:
+- - r
+  - false
+- - e
+  - false
+- - a
+  - true
+- - p
+  - false
+- - p
+  - false
+- - r
+  - false
+- - a
+  - true
+- - i
+  - false
+- - s
+  - false
+- - a
+  - true
+- - l
+  - false
+hangman:
+- "\t___________"
+- "\t|         |"
+- "\t|         0 "
+- "\t|        /|\\  "
+- "\t|        / \\ "
+- "\t|            "
+- "\t|            "
+- "\t|            "
+- "\t|            "
+- "\t|            "
+- "\t|            "
+mistake: 1
+turn: 0
+win: false
+missd_letters:
+- b
+turns_left: 10
+punish: false

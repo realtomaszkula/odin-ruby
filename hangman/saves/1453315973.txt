@@ -1,0 +1,65 @@
+--- !ruby/object:Hangman
+name: Tomasz
+secret_word: narcotization
+letters:
+- n
+- a
+- r
+- c
+- o
+- t
+- i
+- z
+- a
+- t
+- i
+- o
+- n
+bool_pairs:
+- - n
+  - false
+- - a
+  - true
+- - r
+  - false
+- - c
+  - true
+- - o
+  - false
+- - t
+  - false
+- - i
+  - false
+- - z
+  - false
+- - a
+  - true
+- - t
+  - false
+- - i
+  - false
+- - o
+  - false
+- - n
+  - false
+hangman:
+- "\t___________"
+- "\t|         |"
+- "\t|         0 "
+- "\t|        /|\\  "
+- "\t|        / \\ "
+- "\t|            "
+- "\t|            "
+- "\t|            "
+- "\t|            "
+- "\t|            "
+- "\t|            "
+- "\t|            "
+- "\t|            "
+mistake: 1
+turn: 0
+win: false
+missd_letters:
+- v
+turns_left: 12
+punish: false

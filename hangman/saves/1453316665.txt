@@ -1,0 +1,52 @@
+--- !ruby/object:Hangman
+name: test
+secret_word: sepulture
+letters:
+- s
+- e
+- p
+- u
+- l
+- t
+- u
+- r
+- e
+bool_pairs:
+- - s
+  - false
+- - e
+  - true
+- - p
+  - false
+- - u
+  - false
+- - l
+  - false
+- - t
+  - false
+- - u
+  - false
+- - r
+  - false
+- - e
+  - true
+hangman:
+- "\t___________"
+- "\t|         |"
+- "\t|         0 "
+- "\t|        /|\\  "
+- "\t|        / \\ "
+- "\t|            "
+- "\t|            "
+- "\t|            "
+- "\t|            "
+mistake: 4
+turn: 0
+win: false
+missd_letters:
+- a
+- v
+- c
+- d
+turns_left: 5
+punish: false

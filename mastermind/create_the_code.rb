@@ -8,6 +8,12 @@ class MasterMind
 		game_play
 	end
 
+	def self.deserialize(yaml_string)
+		YAML::load(yaml_string)
+	end
+
+
+
 	Player = Struct.new(:name, :code)
 
 	class AI
