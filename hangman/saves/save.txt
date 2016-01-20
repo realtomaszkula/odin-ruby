@@ -1,33 +1,30 @@
 --- !ruby/object:Hangman
-secret_word: phoniness
+secret_word: consomme
 letters:
-- p
-- h
+- c
 - o
 - n
-- i
-- n
+- s
+- o
+- m
+- m
 - e
-- s
-- s
 bool_pairs:
-- - p
-  - false
-- - h
+- - c
   - false
 - - o
   - false
 - - n
   - false
-- - i
+- - s
+  - true
+- - o
   - false
-- - n
+- - m
+  - false
+- - m
   - false
 - - e
-  - false
-- - s
-  - false
-- - s
   - false
 hangman:
 - "\t\t\t___________"
@@ -38,11 +35,9 @@ hangman:
 - "\t\t\t|            "
 - "\t\t\t|            "
 - "\t\t\t|            "
-- "\t\t\t|            "
 mistake: 2
 turn: 0
 win: false
 missd_letters:
 - a
-- g
-turns_left: 7
+turns_left: 6

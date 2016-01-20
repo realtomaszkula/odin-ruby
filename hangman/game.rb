@@ -13,10 +13,6 @@ class Hangman
 		@missd_letters = []
 	end
 
-	# def self.deserialize(yaml_string)
-		
-	# end
-
 	def play
 		loop do
 			puts "\e[H\e[2J"
@@ -29,20 +25,14 @@ class Hangman
 				
 			break if game_over? || @win
 		end
-
 		@win ? won : lost
 	end
 
 	private
 
-
-
 	def save_the_game
-		yaml_string = serialize
-		
-		name = Time.now.to_i.to_s << ".txt"
-		
-		File.open("./saves/#{name}", "w") do |f|
+		yaml_string = serialize		
+		File.open("./saves/save.txt", "w") do |f|
 			f.puts yaml_string
 		end
 
@@ -165,8 +155,7 @@ class Hangman
 	end
 
 	def won
-		puts %{\t\tCONGRATULATIONS! YOU WON!}
-		puts %{\t\tWINNING WORD: #{@secret_word}}
+		puts %{\n\t\t**  CONGRATULATIONS! YOU WON! **}
 	end
 end
 
