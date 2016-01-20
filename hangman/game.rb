@@ -36,18 +36,13 @@ class Hangman
 		end
 
 		@win ? won : lost
-
 	end
 
 	private
 
 	def draw_clues
 		@bool_pairs.each do |pair|
-			if pair[1] == true
-				print " #{pair[0]}"
-			else
-				print " _"
-			end
+			print pair[1] ? " #{pair[0]}" : " _"
 		end
 		print "\n"
 	end
