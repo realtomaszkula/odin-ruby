@@ -18,11 +18,7 @@ class Hangman
 			draw_clues
 			input = get_input
 			temp_bool = @bool_pairs.dup
-			if input.size > 1
-				hit = check_word?(input)
-			else
-				hit = check_letter?(input)
-			end
+			hit = input.size > 1 ?  check_word?(input) : check_letter?(input)
 
 			unless hit
 				@mistake += 1
@@ -109,13 +105,15 @@ class Hangman
 				bool_pair[0] = bool_pair[0], bool_pair[1] = false
 			end
 		end
+
+		@win = true if @bool_pairs.all? {|pair| pair[1] }
 		@missd_letters << letter unless changed
 		changed
 	end
 
 	def check_word?(word)
 		@win = true if @secret_word == word 
-		@secret_word != word
+		@secret_word == word
 	end
 
 	def game_over?
