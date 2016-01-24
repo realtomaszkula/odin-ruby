@@ -103,4 +103,19 @@ describe Enumerable do
     end
   end
 
+  describe '#my_each' do
+    context "with non Enumerable Object" do
+      it { expect { nil.my_each { |x| x } }.to raise_error NoMethodError }
+      it { expect { 5.my_each { |x| x } }.to raise_error NoMethodError }
+      it { expect { "asd".my_each { |x| x } }.to raise_error NoMethodError }
+    end
+
+    context "no arguments passed" do
+      it { expect(arr.my_each).to be_an_instance_of Enumerator}
+    end
+    context "with arguments passed" do
+      it { expect(arr.my_each { |x| x.class }).to be_an_instance_of arr.class}
+    end
+  end
+
 end
