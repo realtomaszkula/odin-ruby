@@ -1,7 +1,7 @@
 require_relative '../methods'
 
 describe Enumerable do
-  let(:arr) {[1,2,3,4,5,6]}
+  let(:arr) { [1,2,3,4,5,6] }
 
   describe '#my_count' do
     context 'it returns a number' do
@@ -32,9 +32,27 @@ describe Enumerable do
         expect(arr.my_count(2)).to eql 1
       end
 
+
+
+    end
+  end
+
+  describe '#my_select' do
+    context 'returns an array' do
+      it { expect(arr.my_select { |x| x } ).to be_an_instance_of Array }
     end
 
+    context 'with non Enumerable object' do
+      it { expect { 5.my_count }.to raise_error NoMethodError}
+      it { expect { nil.my_count }.to raise_error NoMethodError}
+      it { expect { "asd".my_count }.to raise_error NoMethodError}
+    end
 
+    context 'when object has elements' do
+      it { expect(arr.my_select { |x| x > 5 } ).to eql [6] }
+      it { expect(arr.my_select { |x| x > 3 } ).to eql [4,5,6] }
+      it { expect(arr.my_select { |x| x > 10 } ).to eql [] }
+    end
   end
 
 end
