@@ -79,4 +79,28 @@ describe Enumerable do
     end
   end
 
+  describe '#my_inject' do
+    context 'with non Enumerable Object' do
+        it { expect{ nil.my_inject{|sum, x| sum += x } }.to raise_error NoMethodError }
+        it { expect{ 5.my_inject{|sum, x| sum += x } }.to raise_error NoMethodError }
+        it { expect{ "asd".my_inject{|sum, x| sum += x } }.to raise_error NoMethodError }
+    end
+
+    context 'returns a number' do
+      it { expect(arr.my_inject {|sum,x| sum += x}).to be_an_instance_of Fixnum }
+    end
+
+    context 'with no arg passed' do
+      it 'first element used as initial value of memo' do
+        expect( arr.my_inject {|sum, x| sum += x }).to eql 21
+      end
+    end
+
+    context 'with arg passed' do
+      it 'first argument passed is used as initial value of memo' do
+        expect( arr.my_inject(25){|sum, x| sum += x }).to eql 46
+      end
+    end
+  end
+
 end
