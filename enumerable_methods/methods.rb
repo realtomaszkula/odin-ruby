@@ -50,8 +50,8 @@ module Enumerable
 	def my_count(p1 = (no_arg_passed = true; nil), &block)
 	result = 0
 	if no_arg_passed && block_given? == false then return self.size; end
-	
-	if block_given? 
+
+	if block_given?
 		i = 0
 		until (i == self.size)
 			if yield(self[i]) then result += 1;	end
@@ -68,7 +68,7 @@ module Enumerable
 	end
 
 
-	def my_inject ( p = (no_arg_passed = true, nil) )																	
+	def my_inject ( p = (no_arg_passed = true, nil) )
 		 sum = 0
 		 if block_given? && no_arg_passed
 			i = 1
@@ -104,7 +104,7 @@ module Enumerable
 				sum = sum.send sym, self[i]
 				i += 1
 			end
-			
+
 		end
 		return sum
 	end
@@ -148,7 +148,7 @@ module Enumerable
 			 results << yield(proc.call(self[i]))
 			i += 1
 		end
-	else 
+	else
 		i = 0
 		until i == self.size
 			results << proc.call(self[i])
