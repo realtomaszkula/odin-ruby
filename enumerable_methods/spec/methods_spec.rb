@@ -31,9 +31,6 @@ describe Enumerable do
       it 'counts the number' do
         expect(arr.my_count(2)).to eql 1
       end
-
-
-
     end
   end
 
@@ -52,6 +49,33 @@ describe Enumerable do
       it { expect(arr.my_select { |x| x > 5 } ).to eql [6] }
       it { expect(arr.my_select { |x| x > 3 } ).to eql [4,5,6] }
       it { expect(arr.my_select { |x| x > 10 } ).to eql [] }
+    end
+  end
+
+  describe '#my_all?' do
+
+    context 'with non Enumerable object' do
+      it { expect { 5.my_count }.to raise_error NoMethodError}
+      it { expect { nil.my_count }.to raise_error NoMethodError}
+      it { expect { "asd".my_count }.to raise_error NoMethodError}
+    end
+
+    context 'returns true or false' do
+      it { expect(arr.my_all? { |x| x.class == Fixnum }).to be_an_instance_of TrueClass}
+      it { expect(arr.my_all? { |x| x.class == String  }).to be_an_instance_of FalseClass}
+    end
+  end
+
+  describe '#my_none?' do
+    context 'with non Enumerable object' do
+      it { expect{ nil.my_none? }.to raise_error NoMethodError }
+      it { expect{ 5.my_none? }.to raise_error NoMethodError }
+      it { expect{ "asd".my_none }.to raise_error NoMethodError}
+    end
+
+    context 'returns true or false' do
+      it { expect(arr.my_none? { |x| x.class == String }).to be_an_instance_of TrueClass }
+      it { expect(arr.my_none? { |x| x.class == Fixnum }).to be_an_instance_of FalseClass }
     end
   end
 
